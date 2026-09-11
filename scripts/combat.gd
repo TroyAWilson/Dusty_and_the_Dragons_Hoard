@@ -80,7 +80,6 @@ func loadEnemy() -> void:
 
 
 func _on_rune_selected(card) -> void:
-	print(card)
 	if card in selectedRunes:
 		selectedRunes.erase(card)
 		card.setSelected(false)
@@ -92,11 +91,3 @@ func _on_rune_selected(card) -> void:
 	selectedRunes.append(card)
 	card.setSelected(true)
 	print(selectedRunes.map(func(c):return c.runeName))
-
-#func _on_rune_selected(rune:String, selected:bool) -> void:
-	#if selected:
-		#selectedRunes.append(rune)
-	#else:
-		#selectedRunes.erase(rune)
-	#
-	#print("selected runes: ", selectedRunes)

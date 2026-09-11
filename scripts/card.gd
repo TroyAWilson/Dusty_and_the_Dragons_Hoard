@@ -20,8 +20,6 @@ func _ready() -> void:
 	outline.visible = false
 	
 func setSelected(selected:bool) -> void:
-	print(selected)
-	
 	isSelected = selected
 	outline.visible = selected
 	startingPosition = position
@@ -37,17 +35,3 @@ func setSelected(selected:bool) -> void:
 	
 func _on_pressed() -> void:
 	runeSelected.emit(self)
-	
-	#startingPosition = position
-	#var tween = create_tween()
-	#
-	#if isSelected: #deselect if pressed again
-		#isSelected = false
-		#outline.visible = false
-		#tween.tween_property(self, "position", startingPosition + Vector2(0,5), 0.1)
-	#else:
-		#isSelected = true
-		#outline.visible = true
-		#tween.tween_property(self, "position", startingPosition + Vector2(0,-5), 0.1)
-		#
-	#runeSelected.emit(runeName, isSelected)

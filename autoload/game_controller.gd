@@ -34,7 +34,7 @@ var runes ={
 var rooms = [
 	{
 		"type": "combat",
-		"enemy": "canary"
+		"enemy": "mole"
 	},
 	{
 		"type": "gold",
