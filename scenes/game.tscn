@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dckxiowrr4obi"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_h75nr"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_h75nr")
+
+[node name="RoomContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 160.0
+offset_bottom = 145.0
+
+[node name="TransitionLayer" type="CanvasLayer" parent="."]
+
+[node name="FadeRect" type="ColorRect" parent="TransitionLayer"]
+offset_right = 160.0
+offset_bottom = 145.0
+mouse_filter = 2
+color = Color(0.172549, 0.129412, 0.215686, 0)
