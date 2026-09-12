@@ -2,15 +2,16 @@ extends Node2D
 
 @onready var roomContainer = $RoomContainer
 @onready var fadeRect = $TransitionLayer/FadeRect
+@onready var goldLabel := $CanvasLayer/gold
+
 
 var combatScene = preload("res://scenes/combat.tscn")
 var goldScene = preload("res://scenes/gold.tscn")
 
-
 func _ready() -> void:
 	fadeRect.color.a = 0.0
 	loadCurrentRoom()
-
+	updateGoldLabel()
 
 func _process(_delta: float) -> void:
 	# testing only
@@ -34,6 +35,7 @@ func startCombat(room: Dictionary) -> void:
 	GameController.drawStartingHand()
 
 	var combat = combatScene.instantiate()
+	combat.roomFinished.connect(handleRoomChange)
 
 	combat.setup(GameController.hand)
 
@@ -44,6 +46,8 @@ func startGoldRoom(room: Dictionary) -> void:
 	var goldRoom = goldScene.instantiate()
 
 	goldRoom.setup(room["amount"])
+
+	goldRoom.addGold.connect(updateGoldLabel)
 
 	roomContainer.add_child(goldRoom)
 
@@ -69,7 +73,8 @@ func clearCurrentRoom() -> void:
 	for child in roomContainer.get_children():
 		child.queue_free()
 
-
+func updateGoldLabel() -> void:
+	goldLabel.text = "[font_size=10][color=2c2137]" + str(GameController.playerGold)
 
 #Fade transition
 

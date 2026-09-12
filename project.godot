@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GameController="*res://autoload/game_controller.gd"
 SceneTransition="*res://scenes/SceneTransition.tscn"
+AudioController="*res://autoload/audio_controller.gd"
 
 [display]
 
@@ -27,6 +28,7 @@ window/size/viewport_height=144
 window/size/window_width_override=640
 window/size/window_height_override=576
 window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
 
 [input]
 

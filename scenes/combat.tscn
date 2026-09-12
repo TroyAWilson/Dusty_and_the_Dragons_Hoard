@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://os426pnv5bex"]
 
-[ext_resource type="Texture2D" uid="uid://ddeutl6itgcg2" path="res://media/bkgv1.png" id="1_e36fg"]
 [ext_resource type="Script" path="res://scripts/combat.gd" id="1_pnfks"]
+[ext_resource type="Texture2D" uid="uid://c6d4br3o5rbbi" path="res://media/bkgV2.png" id="2_g44b4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ao6lq"]
 
@@ -10,7 +10,7 @@ script = ExtResource("1_pnfks")
 
 [node name="bkg" type="Sprite2D" parent="."]
 position = Vector2(80, 72)
-texture = ExtResource("1_e36fg")
+texture = ExtResource("2_g44b4")
 
 [node name="EnemyArea" type="Control" parent="."]
 layout_mode = 3
@@ -24,6 +24,16 @@ offset_bottom = 99.0
 position = Vector2(27, 27)
 sprite_frames = SubResource("SpriteFrames_ao6lq")
 autoplay = "default"
+
+[node name="enemyHealthBar" type="ProgressBar" parent="EnemyArea"]
+layout_mode = 0
+offset_top = -9.0
+offset_right = 52.0
+offset_bottom = -3.0
+show_percentage = false
+
+[node name="intention" type="Sprite2D" parent="EnemyArea"]
+position = Vector2(24, -20)
 
 [node name="PlayerArea" type="Control" parent="."]
 layout_mode = 3

@@ -2,6 +2,7 @@ extends Node
 
 var playerHealth := 10
 var maxHealth := 10
+var playerBlock := 0
 var playerGold := 0
 var roomIndex := 0
 
@@ -31,15 +32,50 @@ var runes ={
 	},
 }
 
+var spells = {
+	"fire_fire":{
+		"types":["damage"],
+		"damage":5,
+		"hits":1
+	},
+	"fire_stone":{
+		"types":["damage", "block"],
+		"damage":3,
+		"block":3
+	},
+	"fire_storm":{
+		"types":["damage"],
+		"damage":1,
+		"hits":4
+	},
+	"stone_stone":{
+		"types":["block"],
+		"block":5
+	},
+	"stone_storm":{
+		"types":["effect"],
+		"stun":1 #loses next action
+	},
+	"storm_storm":{
+		"types":["damage"],
+		"damage":2,
+		"hits": -1 #gamble, each strike has a decreasing chance to hit
+	}
+}
+
 var rooms = [
 	{
 		"type": "combat",
-		"enemy": "mole"
+		"enemy": "canary"
 	},
 	{
 		"type": "gold",
 		"amount": 10
-	}
+	},
+	{
+		"type": "combat",
+		"enemy": "mole"
+	},
 ]
 
 @onready var canarySprite := preload("res://media/canary.png")
@@ -54,7 +90,11 @@ var rooms = [
 			{
 				"type": "attack",
 				"damage": 2
-			}
+			},
+			{
+				"type": "block",
+				"damage": 2
+			},
 		]
 	},
 	"mole": {
@@ -78,3 +118,6 @@ func drawStartingHand() -> void:
 
 	for i in range(hand_size):
 		hand.append(playerDeck.pop_back())
+		
+func drawNewHand() -> void:
+	drawStartingHand()
