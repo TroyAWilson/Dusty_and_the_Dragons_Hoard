@@ -1,8 +1,10 @@
 # Dusty and the Dragon's Hoard
 
-![screenshot](Screenshot 2026-09-11 165448.png)
+![screenshot](screenshot.png)
 
-**Dusty and the Dragon's Hoard** is a Game Boy-style rune-combining roguelite created for **GBJam 14** and the theme **"Old Gold."**
+Placeholder README
+
+**Dusty and the Dragon's Hoard** is a Game Boy-style rune-combining roguelite created for [**GBJam 14**](https://itch.io/jam/gbjam-14) and the theme **"Old Gold."**
 
 Play as Dusty, an old-timey prospector who has stumbled across something considerably stranger than gold. Armed with mysterious magical runes, descend deeper into the mine, battle bizarre creatures, collect as much gold as you can, and discover what exactly has been hoarding all that treasure.
 
@@ -47,15 +49,3 @@ The game uses the original Game Boy resolution of **160×144** and is designed a
 - GDScript
 - Pixel art
 - Original music and sound
-
-## Development
-
-This game was created during a game jam, so expect gold, questionable magic, strange things living underground, and decisions made under severe time constraints.
-
-## Credits
-
-**Design, Programming, Art & Music:** [Your Name]
-
-## License
-
-TBD
