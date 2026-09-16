@@ -33,3 +33,6 @@ func playSFX(stream: AudioStream, volume:float = -25.0) -> AudioStreamPlayer:
 	
 func playCoin() -> AudioStreamPlayer:
 	return playSFX(coin)
+
+func playBoop() -> AudioStreamPlayer:
+	return playSFX(boop, -35.0)

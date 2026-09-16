@@ -1,6 +1,7 @@
 extends Node2D
 
 signal addGold
+signal roomFinished
 
 var goldAmount: int = 0
 var opened := false
@@ -24,6 +25,9 @@ func _process(delta: float) -> void:
 		GameController.playerGold += goldAmount
 		addGold.emit()
 		AudioController.playCoin()
+		
+		await get_tree().create_timer(1)
+		roomFinished.emit()
 		
 	elif Input.is_action_just_pressed("gb_b"):
 		print('I guess youre skipping, okay hate free money')

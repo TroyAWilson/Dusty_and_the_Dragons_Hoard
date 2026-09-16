@@ -1,6 +1,7 @@
 extends Node2D
 
 signal roomFinished
+signal takeDamage
 
 #the other junk
 var currentHand: Array[String] = []
@@ -10,11 +11,16 @@ var currentEnemyIntention: Dictionary
 var selectedRunes: Array[Button] = []
 var casting := false
 
+var playerBlock := 0
+var currentEnemyBlock := 0
+
 #onreadys
 @onready var enemySprite: AnimatedSprite2D = $EnemyArea/enemySprite
 @onready var enemyHealthBar := $EnemyArea/enemyHealthBar
 @onready var enemyIntentionSprite := $EnemyArea/intention
 @onready var cardContainer := $cardContainer
+@onready var enemyBlockContainer := $EnemyArea/BlockContainer
+@onready var enemyBlockValue := $EnemyArea/BlockContainer/blockValue
 
 #preloads
 var cardScene := preload("res://scenes/card.tscn")
@@ -40,7 +46,6 @@ func _process(delta: float) -> void:
 
 func setup(hand: Array[String]) -> void:
 	currentHand = hand.duplicate()
-
 	var enemyKey: String = GameController.rooms[GameController.roomIndex]["enemy"]
 	currentEnemy = GameController.enemies[enemyKey].duplicate(true)
 
@@ -50,13 +55,9 @@ func loadHand() -> void:
 		var runeData = GameController.runes[runeName]
 		
 		card.setup(runeName, runeData['sprite'])
-		
 		card.runeSelected.connect(_on_rune_selected)
-		
 		cardContainer.add_child(card)
-	
 		card.animateIn()
-
 		
 	await get_tree().process_frame
 	
@@ -68,8 +69,9 @@ func newHand() -> void:
 		child.queue_free()
 		
 	selectedRunes.clear()
-		
 	GameController.drawNewHand()
+	currentHand = GameController.hand.duplicate()
+
 	loadHand()
 
 func loadEnemy() -> void:
@@ -108,7 +110,6 @@ func loadEnemy() -> void:
 	enemySprite.play("idle")
 	
 	#load health
-	print(currentEnemy)
 	enemyHealthBar.max_value = currentEnemy.health
 	enemyHealthBar.value = enemyHealthBar.max_value
 	
@@ -125,6 +126,7 @@ func _on_rune_selected(card) -> void:
 	if selectedRunes.size() >= 2:
 		return
 		
+	AudioController.playBoop()
 	selectedRunes.append(card)
 	card.setSelected(true)
 	print(selectedRunes.map(func(c):return c.runeName))
@@ -138,37 +140,54 @@ func handleSpellCast() -> void:
 	if "damage" in spellInfo["types"]:
 		print('damaging spell boom!')
 		if "hits" in spellInfo:
-			dealDamage(spellInfo["damage"], spellInfo["hits"])
+			await dealDamage(spellInfo["damage"], spellInfo["hits"])
 		else:
-			dealDamage(spellInfo["damage"])
-	
+			await dealDamage(spellInfo["damage"])
 	if "block" in spellInfo["types"]:
 		print("blocked it!")
-	
+		handleBlock(spellInfo["block"])
 	if "effect" in spellInfo["types"]:
-		print("do an effect?") #i dont really know what this means yet
+		match spellInfo["effect"]:
+			"stun":
+				print("stun")
+			"gainGold":
+				print("gainGold")
+	
+	if currentEnemy.health <= 0:
+		print('enemy is at 0')
+		roomFinished.emit()
+	else:
+		handleEnemyTurn()
+		newHand()
 	
 	casting = false
+	
 	
 func normalizeSpell(rune1:String, rune2:String) -> String:
 	var temp = [rune1, rune2]
 	temp.sort()
 	return temp[0] + "_" + temp[1]
 
-func dealDamage(damage:int, hits:int=1) -> void:
-	print("dealing " + str(damage) + " points of damage " + str(hits) + " times")
+func handleBlock(block:int) -> void:
+	if block == -2:
+		block = GameController.playerGold
+	
+	playerBlock += block
 
+
+func dealDamage(damage:int, hits:int=1) -> void:
+	if damage == -2:
+		damage = GameController.playerGold
+	
 	if hits == -1:
 		var hitCount = 1
 		var threshold = 101
-		print('calculate number of hits')
 		while randi_range(1,100) < threshold:
 			hitCount += 1
 			threshold -= 10
-			
-		print("hitcount: " + str(hitCount))
-		
 		hits = hitCount
+	elif hits == -2:
+		hits = GameController.playerGold
 	
 	for i in range(hits):
 		#add sound here
@@ -176,13 +195,6 @@ func dealDamage(damage:int, hits:int=1) -> void:
 		enemyHealthBar.value = currentEnemy.health
 		await get_tree().create_timer(0.2).timeout
 
-	if currentEnemy.health <= 0:
-		print('you have defeated the enemy')
-		roomFinished.emit()
-		
-	else:
-		handleEnemyTurn()
-		newHand()
 	
 func loadEnemyIntention() -> void:
 	if currentEnemyIntention.type == "attack":
@@ -191,6 +203,28 @@ func loadEnemyIntention() -> void:
 		enemyIntentionSprite.texture = enemyBlockPreload
 	
 func handleEnemyTurn() -> void:
+	currentEnemyBlock = 0 
+	if currentEnemyIntention.type == "attack":
+		var dmg = max(0, currentEnemyIntention.damage - playerBlock)
+		GameController.playerTakeDamage(dmg)
+		takeDamage.emit()
+	elif currentEnemyIntention.type == "block":
+		currentEnemyBlock = currentEnemyIntention.block
+		enemyBlockValue.text = "[font_size=8]" + str(currentEnemyBlock)
+		
+	if currentEnemyBlock != 0:
+		enemyBlockContainer.visible = true
+	else:
+		enemyBlockContainer.visible = false
+		
+	match currentEnemyIntention.type:
+		"attack":
+			print('attack ow')
+		"block":
+			print('blocking, loser')
+	
 	currentEnemyIntentionIndex += 1
+	if currentEnemyIntentionIndex >= currentEnemy.attacks.size():
+		currentEnemyIntentionIndex = 0
 	currentEnemyIntention = currentEnemy.attacks[currentEnemyIntentionIndex]
 	loadEnemyIntention()
