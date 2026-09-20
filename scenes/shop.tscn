@@ -1,0 +1,78 @@
+[gd_scene load_steps=9 format=3 uid="uid://c5dhfl3lnkyh"]
+
+[ext_resource type="Script" path="res://scripts/shop.gd" id="1_qy372"]
+[ext_resource type="Texture2D" uid="uid://c6d4br3o5rbbi" path="res://media/bkgV2.png" id="2_ux25b"]
+[ext_resource type="Texture2D" uid="uid://bi4cvthphb477" path="res://media/shopkeepv1.png" id="3_o0i6p"]
+[ext_resource type="Texture2D" uid="uid://6dihoph0ursy" path="res://media/gift.png" id="4_7ctxu"]
+[ext_resource type="FontFile" uid="uid://2bqnex3sh6ai" path="res://Early GameBoy.ttf" id="5_bcnm0"]
+[ext_resource type="Texture2D" uid="uid://cw2ka38h8mnyi" path="res://media/shopkeepPortrait.png" id="6_k2scj"]
+[ext_resource type="Texture2D" uid="uid://c3k3h7srksqro" path="res://media/A2.png" id="7_4ea0g"]
+[ext_resource type="Texture2D" uid="uid://unr36qudidkl" path="res://media/B2.png" id="8_4avod"]
+
+[node name="shop" type="Node2D"]
+script = ExtResource("1_qy372")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(80, 72)
+texture = ExtResource("2_ux25b")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(80, 88)
+texture = ExtResource("3_o0i6p")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(67, 99)
+texture = ExtResource("4_7ctxu")
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_left = 11.0
+offset_top = 15.0
+offset_right = 152.0
+offset_bottom = 57.0
+color = Color(0.929412, 0.705882, 0.631373, 1)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 13.0
+offset_top = 17.0
+offset_right = 149.0
+offset_bottom = 55.0
+color = Color(0.662745, 0.407843, 0.407843, 1)
+
+[node name="shopKeeperText" type="RichTextLabel" parent="."]
+offset_left = 15.0
+offset_top = 19.0
+offset_right = 112.0
+offset_bottom = 54.0
+theme_override_fonts/normal_font = ExtResource("5_bcnm0")
+bbcode_enabled = true
+text = "[wave][font_size=8][color=2c2137]Hanful of pee, only 15 gold"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+offset_left = 22.0
+offset_top = 128.0
+offset_right = 89.0
+offset_bottom = 140.0
+theme_override_fonts/normal_font = ExtResource("5_bcnm0")
+bbcode_enabled = true
+text = "[font_size=8]Purchase"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+offset_left = 107.0
+offset_top = 129.0
+offset_right = 148.0
+offset_bottom = 141.0
+theme_override_fonts/normal_font = ExtResource("5_bcnm0")
+bbcode_enabled = true
+text = "[font_size=8]Leave"
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+position = Vector2(129, 36)
+texture = ExtResource("6_k2scj")
+
+[node name="A2" type="Sprite2D" parent="."]
+position = Vector2(12, 133)
+texture = ExtResource("7_4ea0g")
+
+[node name="B2" type="Sprite2D" parent="."]
+position = Vector2(96, 134)
+texture = ExtResource("8_4avod")

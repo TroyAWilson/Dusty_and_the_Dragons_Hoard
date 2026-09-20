@@ -5,8 +5,14 @@ var maxHealth := 10
 var playerBlock := 0
 var playerGold := 0
 var roomIndex := 0
-
 var hand: Array[String] = []
+var playerItems: Array[String] = []
+
+var startingRunes: Array[String] = [
+	"fire",
+	"stone",
+	"storm"
+]
 
 var unlockedRunes: Array[String] = [
 	"fire",
@@ -14,10 +20,16 @@ var unlockedRunes: Array[String] = [
 	"storm"
 ]
 
-var playerDeck: Array[String] = [
+var playerStartingDeck: Array[String] = [
 	"fire", "fire", "fire", "fire",
 	"stone", "stone", "stone", "stone",
 	"storm", "storm"
+]
+
+var playerDeck: Array[String] = [
+	"fire", "fire", "fire", "fire",
+	"stone", "stone", "stone", "stone",
+	"storm", "storm",
 ]
 
 var runes ={
@@ -95,46 +107,45 @@ var spells = {
 		"types":["block"],
 		"block":-2,
 	},
+	"death_death":{
+		"types":["effect"],
+		"effect":"gamble", #70/30 chance instant death for enemy/you
+		"amount":1000000000
+	},
+	"death_fire":{
+		"types":["damage", "effect"],
+		"effect":"delayedDamage",
+		"damage":20,
+		"hits":1,
+		"delayedDamage":10
+	},
+	"death_stone":{#gain ludacris block in exchange for 3 life
+		"types":["block", "effect"],
+		"effect":"selfDamage",
+		"block":100,
+		"selfDamage":3
+	}, 
+	"death_storm":{#deal essentially 45 damage for 10 life
+		"types":["damage", "effect"],
+		"effect":"selfDamage",
+		"damage":15,
+		"hits":3,
+		"selfDamage":10
+	}, 
+	"death_gold":{
+		"types":["effect"],
+		"effect":"bloodMoney", #2 health, 10 gold?
+	},
 }
 
-var rooms = [
-	{
-		"type": "combat",
-		"enemy": "canary"
-	},
-	{
-		"type": "gold",
-		"amount": 10
-	},
-	{
-		"type":"rune",
-		"newRune":"gold"
-	},
-	{
-		"type": "combat",
-		"enemy": "mole"
-	},
-	{
-		"type": "gold",
-		"amount": 15
-	},
-	{
-		"type": "combat",
-		"enemy": "frog"
-	},
-	{
-		"type":"rune",
-		"newRune":"death"
-	},
-		{
-		"type": "combat",
-		"enemy": "dragon"
-	},
-]
+var startingSpells = spells.duplicate()
+var rooms = generateRooms()
 
 @onready var canarySprite := preload("res://media/canary.png")
 @onready var moleSprite := preload("res://media/mole.png")
 @onready var frogSprite := preload("res://media/frog.png")
+@onready var dragonSprite := preload("res://media/dragon.png")
+@onready var oozeSprite := preload("res://media/ooze.png")
 
 @onready var enemies = {
 	"canary": {
@@ -142,6 +153,10 @@ var rooms = [
 		"health": 5,
 		"sprite":canarySprite,
 		"attacks": [
+			{
+				"type": "attack",
+				"damage": 1
+			},
 			{
 				"type": "attack",
 				"damage": 2
@@ -152,64 +167,108 @@ var rooms = [
 			},
 		]
 	},
+	"frog": {
+		"name": "Frog",
+		"health": 15,
+		"sprite":frogSprite,
+		"attacks": [
+			{
+				"type": "attack",
+				"damage": 5
+			},
+			{
+				"type":"block",
+				"block":15
+			},
+		]
+	},
+	"ooze": {
+		"name": "Oooze",
+		"health": 20,
+		"sprite":oozeSprite,
+		"attacks": [
+			{
+				"type": "block",
+				"block": 10
+			},
+			{
+				"type":"attack",
+				"damage":6
+			},
+			{
+				"type": "block",
+				"block": 20
+			},
+			{
+				"type":"attack",
+				"damage":12
+			},
+		]
+	},
 	"mole": {
 		"name": "Mole",
 		"health": 15,
 		"sprite":moleSprite,
 		"attacks": [
 			{
-				"type":"block",
-				"block":6
+				"type":"attack",
+				"damage":1
+			},
+			{
+				"type": "attack",
+				"damage": 2
+			},
+			{
+				"type": "attack",
+				"damage": 3
 			},
 			{
 				"type": "attack",
 				"damage": 5
-			}
-		]
-	},
-	"frog": {
-		"name": "Mole",
-		"health": 15,
-		"sprite":frogSprite,
-		"attacks": [
-			{
-				"type":"block",
-				"block":6
 			},
 			{
 				"type": "attack",
-				"damage": 5
-			}
-		]
-	},
-	"ooze": {
-		"name": "Mole",
-		"health": 15,
-		"sprite":moleSprite,
-		"attacks": [
-			{
-				"type":"block",
-				"block":6
+				"damage": 8
 			},
 			{
 				"type": "attack",
-				"damage": 5
-			}
+				"damage": 13
+			},
+			{
+				"type": "attack",
+				"damage": 21
+			},
+			{
+				"type": "attack",
+				"damage": 34
+			},
 		]
 	},
 	"dragon": {
-		"name": "Mole",
-		"health": 30,
-		"sprite":moleSprite,
+		"name": "Dragon",
+		"health": 45,
+		"sprite":dragonSprite,
 		"attacks": [
 			{
 				"type":"attack",
-				"damage":15
+				"damage":9
 			},
 			{
 				"type": "attack",
 				"damage": 5
-			}
+			},
+			{
+				"type": "block",
+				"damage": 15
+			},
+			{
+				"type": "block",
+				"damage": 10
+			},
+			{
+				"type": "attack",
+				"damage": 50
+			},
 		]
 	}
 }
@@ -238,6 +297,85 @@ func playerTakeDamage(dmg:int):
 func addRuneToDeck(rune:String) -> void:
 	print('adding ' + rune + " to the deck")
 	unlockedRunes.append(rune)
-	playerDeck += [rune, rune, rune, rune]
+	playerDeck += [rune, rune, rune]
 	print('new player deck: ')
 	print(playerDeck)
+
+func reset() -> void:
+	playerDeck = playerStartingDeck
+	unlockedRunes = startingRunes
+	playerGold = 0
+	playerHealth = 10
+	roomIndex = 0
+	maxHealth = 10
+	playerItems = []
+	spells = startingSpells
+
+#testing an idea
+func generateRooms() -> Array[Dictionary]:
+	var generatedRooms: Array[Dictionary]
+	
+	#1
+	generatedRooms.append({
+		"type": "combat",
+		"enemy": "canary"
+	})
+	
+	generatedRooms.append({
+		"type": "rune",
+		"newRune": "gold"
+	})
+	
+	generatedRooms.append({
+		"type": "gold",
+		"amount": randi_range(10,20)
+	})
+	
+	generatedRooms.append(getRandomRoom())
+	generatedRooms.append(getRandomRoom())
+	
+	generatedRooms.append({
+		"type": "combat",
+		"enemy": "frog"
+	})
+	
+	generatedRooms.append(getRandomRoom())
+	
+	generatedRooms.append({
+		"type": "combat",
+		"enemy": "ooze"
+	})
+	
+	generatedRooms.append(getRandomRoom())
+	generatedRooms.append(getRandomRoom())
+	
+	generatedRooms.append({
+		"type": "combat",
+		"enemy": "mole"
+	})
+	
+	generatedRooms.append(getRandomRoom())
+	
+	generatedRooms.append({
+		"type": "rune",
+		"newRune": "death"
+	})
+	
+	generatedRooms.append(getRandomRoom())
+	generatedRooms.append(getRandomRoom())
+	
+	generatedRooms.append({
+		"type": "combat",
+		"enemy": "dragon"
+	})
+	
+	return generatedRooms
+
+func getRandomRoom() -> Dictionary:
+	var possibilities = ["gold", "shop"]
+	
+	var pick = possibilities.pick_random()
+	if pick == "gold":
+		return {"type":"gold", "amount": randi_range(10,20)}
+	
+	return {"type":"shop"}

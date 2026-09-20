@@ -1,0 +1,92 @@
+[gd_scene load_steps=10 format=3 uid="uid://cbjhjqmxigyr7"]
+
+[ext_resource type="Texture2D" uid="uid://c6d4br3o5rbbi" path="res://media/bkgV2.png" id="1_1cct2"]
+[ext_resource type="Script" path="res://scripts/win.gd" id="1_x81nj"]
+[ext_resource type="Texture2D" uid="uid://dqtv62hw5ynub" path="res://media/oldGold.png" id="2_eepwp"]
+[ext_resource type="FontFile" uid="uid://2bqnex3sh6ai" path="res://Early GameBoy.ttf" id="3_w4ey0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uxud3"]
+atlas = ExtResource("2_eepwp")
+region = Rect2(0, 0, 160, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wdgq"]
+atlas = ExtResource("2_eepwp")
+region = Rect2(160, 0, 160, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0xbxn"]
+atlas = ExtResource("2_eepwp")
+region = Rect2(320, 0, 160, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cu2vr"]
+atlas = ExtResource("2_eepwp")
+region = Rect2(480, 0, 160, 144)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r3k7c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uxud3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wdgq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0xbxn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cu2vr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="win" type="Node2D"]
+script = ExtResource("1_x81nj")
+
+[node name="bkg" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(80, 72)
+texture = ExtResource("1_1cct2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(80, 72)
+sprite_frames = SubResource("SpriteFrames_r3k7c")
+autoplay = "default"
+frame_progress = 0.989882
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+offset_left = 34.0
+offset_top = 14.0
+offset_right = 138.0
+offset_bottom = 38.0
+theme_override_fonts/normal_font = ExtResource("3_w4ey0")
+bbcode_enabled = true
+text = "[font_size=8][center][wave][color=a96868]Discovered The Old Gold"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 33.0
+offset_top = 13.0
+offset_right = 137.0
+offset_bottom = 37.0
+theme_override_fonts/normal_font = ExtResource("3_w4ey0")
+bbcode_enabled = true
+text = "[font_size=8][center][wave][color=edb4a1]Discovered The Old Gold"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+offset_left = 33.0
+offset_top = 115.0
+offset_right = 137.0
+offset_bottom = 136.0
+theme_override_fonts/normal_font = ExtResource("3_w4ey0")
+bbcode_enabled = true
+text = "[font_size=8][center][color=a96868]Press Start to Restart"
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="."]
+offset_left = 33.0
+offset_top = 114.0
+offset_right = 137.0
+offset_bottom = 135.0
+theme_override_fonts/normal_font = ExtResource("3_w4ey0")
+bbcode_enabled = true
+text = "[font_size=8][center][color=edb4a1]Press Start to Restart"

@@ -11,7 +11,7 @@ func setup(amount: int) -> void:
 	goldAmount = amount
 
 func _ready() -> void:
-	amountLabel.text = "[center]" + "+%d GOLD" % goldAmount
+	amountLabel.text = "[center]" + "%d GOLD" % goldAmount
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("gb_a") and not opened:
@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 		addGold.emit()
 		AudioController.playCoin()
 		
-		await get_tree().create_timer(1)
+		await get_tree().create_timer(1).timeout
 		roomFinished.emit()
 		
 	elif Input.is_action_just_pressed("gb_b"):

@@ -1,13 +1,11 @@
 extends Node2D
 
+var bkg: AudioStreamPlayer
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	bkg = AudioController.playIntro()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("start"):
-		SceneTransition.change_scene(SceneTransition.mainGame)
-		print("Start pressed!")
+func _input(event: InputEvent) -> void:
+	if event.is_pressed():
+		bkg.stop()
+		SceneTransition.change_scene(SceneTransition.instructions)

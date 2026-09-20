@@ -5,6 +5,9 @@ extends CanvasLayer
 var transitioning := false
 
 const mainGame := "res://scenes/game.tscn"
+const gameOver := "res://scenes/game_over.tscn"
+const gameWin := "res://scenes/win.tscn"
+const instructions := "res://scenes/instructions.tscn"
 
 func change_scene(path: String, duration := 0.5):
 	if transitioning:

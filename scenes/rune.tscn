@@ -1,25 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://suk6gvhcyl01"]
+[gd_scene load_steps=6 format=3 uid="uid://suk6gvhcyl01"]
 
 [ext_resource type="Script" path="res://scripts/rune.gd" id="1_3vary"]
 [ext_resource type="Texture2D" uid="uid://c6d4br3o5rbbi" path="res://media/bkgV2.png" id="1_dc6es"]
 [ext_resource type="Texture2D" uid="uid://crtqel0dc4r22" path="res://media/goldSymbol.png" id="3_46ba3"]
+[ext_resource type="FontFile" uid="uid://2bqnex3sh6ai" path="res://Early GameBoy.ttf" id="3_tv1kf"]
+[ext_resource type="Texture2D" uid="uid://c3k3h7srksqro" path="res://media/A2.png" id="5_m0p6s"]
 
 [node name="rune" type="Node2D"]
 position = Vector2(0, -1)
 script = ExtResource("1_3vary")
 
 [node name="bkg" type="Sprite2D" parent="."]
-position = Vector2(80, 72)
+position = Vector2(80, 73)
 texture = ExtResource("1_dc6es")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-visible = false
-offset_left = 4.0
-offset_top = 22.0
-offset_right = 161.0
-offset_bottom = 62.0
-text = "This is a rune room"
+offset_left = 64.0
+offset_top = 102.0
+offset_right = 126.0
+offset_bottom = 127.0
+theme_override_fonts/normal_font = ExtResource("3_tv1kf")
+bbcode_enabled = true
+text = "[font_size=8][color=edb4a1]Add Rune
+ to Deck"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+offset_left = 21.0
+offset_top = 35.0
+offset_right = 137.0
+offset_bottom = 60.0
+theme_override_fonts/normal_font = ExtResource("3_tv1kf")
+bbcode_enabled = true
+text = "[center][wave][font_size=8][color=edb4a1]New Rune Discovered"
 
 [node name="runeSprite" type="Sprite2D" parent="."]
 position = Vector2(78, 74)
 texture = ExtResource("3_46ba3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(53, 112)
+texture = ExtResource("5_m0p6s")

@@ -1,0 +1,97 @@
+[gd_scene load_steps=10 format=3 uid="uid://c70pktjh42r75"]
+
+[ext_resource type="Script" path="res://scripts/instructions.gd" id="1_6kjuj"]
+[ext_resource type="FontFile" uid="uid://2bqnex3sh6ai" path="res://Early GameBoy.ttf" id="3_vrrka"]
+[ext_resource type="Texture2D" uid="uid://c3k3h7srksqro" path="res://media/A2.png" id="4_uyobo"]
+[ext_resource type="Texture2D" uid="uid://wysq7tkup6cd" path="res://media/Z.png" id="5_32w4w"]
+[ext_resource type="Texture2D" uid="uid://b0km6r5bvlfvw" path="res://media/X.png" id="6_ewl6o"]
+[ext_resource type="Texture2D" uid="uid://unr36qudidkl" path="res://media/B2.png" id="6_kiyln"]
+[ext_resource type="Texture2D" uid="uid://rwmy0jfx3ueh" path="res://media/arrows.png" id="8_lee15"]
+[ext_resource type="Texture2D" uid="uid://d36ea4y6hvavy" path="res://media/Right.png" id="9_hm0sm"]
+[ext_resource type="Texture2D" uid="uid://d1h0blh5yi3yi" path="res://media/Left.png" id="10_6yv43"]
+
+[node name="Instructions" type="Node2D"]
+script = ExtResource("1_6kjuj")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 160.0
+offset_bottom = 144.0
+color = Color(0.172549, 0.129412, 0.215686, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 8.0
+offset_right = 152.0
+offset_bottom = 24.0
+theme_override_fonts/normal_font = ExtResource("3_vrrka")
+bbcode_enabled = true
+text = "[color=edb4a1]Controls"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+offset_left = 47.0
+offset_top = 36.0
+offset_right = 151.0
+offset_bottom = 60.0
+theme_override_fonts/normal_font = ExtResource("3_vrrka")
+bbcode_enabled = true
+text = "[font_size=8][color=edb4a1]-Select runes
+-Accept"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+offset_left = 48.0
+offset_top = 76.0
+offset_right = 152.0
+offset_bottom = 100.0
+theme_override_fonts/normal_font = ExtResource("3_vrrka")
+bbcode_enabled = true
+text = "[font_size=8][color=edb4a1]-Cast Spell
+-skip room"
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="."]
+offset_left = 48.0
+offset_top = 112.0
+offset_right = 152.0
+offset_bottom = 124.0
+theme_override_fonts/normal_font = ExtResource("3_vrrka")
+bbcode_enabled = true
+text = "[font_size=8][color=edb4a1]-Navigate"
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="."]
+offset_left = 46.0
+offset_top = 131.0
+offset_right = 135.0
+offset_bottom = 143.0
+theme_override_fonts/normal_font = ExtResource("3_vrrka")
+bbcode_enabled = true
+text = "[font_size=8][color=edb4a1]Enter-start"
+
+[node name="A3" type="Sprite2D" parent="."]
+position = Vector2(16, 32)
+texture = ExtResource("4_uyobo")
+
+[node name="Z" type="Sprite2D" parent="."]
+position = Vector2(32, 48)
+texture = ExtResource("5_32w4w")
+
+[node name="B2" type="Sprite2D" parent="."]
+position = Vector2(16, 72)
+texture = ExtResource("6_kiyln")
+
+[node name="X" type="Sprite2D" parent="."]
+position = Vector2(32, 88)
+texture = ExtResource("6_ewl6o")
+
+[node name="Arrows" type="Sprite2D" parent="."]
+position = Vector2(24, 112)
+texture = ExtResource("8_lee15")
+
+[node name="Right" type="Sprite2D" parent="."]
+position = Vector2(32, 128)
+texture = ExtResource("9_hm0sm")
+
+[node name="Left" type="Sprite2D" parent="."]
+position = Vector2(16, 128)
+texture = ExtResource("10_6yv43")
+
+[node name="A2" type="Sprite2D" parent="."]
+position = Vector2(151, 135)
+texture = ExtResource("4_uyobo")

@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dckxiowrr4obi"]
+[gd_scene load_steps=7 format=3 uid="uid://dckxiowrr4obi"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_h75nr"]
 [ext_resource type="FontFile" uid="uid://2bqnex3sh6ai" path="res://Early GameBoy.ttf" id="2_xg6lw"]
 [ext_resource type="Texture2D" uid="uid://byr73kwhcxnsc" path="res://media/heartv1.png" id="3_8mkc0"]
+[ext_resource type="Texture2D" uid="uid://4oa26v7xopwj" path="res://media/blockV1.png" id="4_3eau8"]
+[ext_resource type="Texture2D" uid="uid://dcbo6c0j0t0of" path="res://media/portrait.png" id="4_5d1sj"]
+[ext_resource type="Texture2D" uid="uid://b5q682l7vbh4t" path="res://media/coin.png" id="5_hkhdc"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_h75nr")
@@ -21,24 +24,46 @@ offset_bottom = 14.0
 color = Color(0.929412, 0.705882, 0.631373, 1)
 
 [node name="health" type="RichTextLabel" parent="CanvasLayer"]
-offset_left = 18.0
-offset_right = 85.0
-offset_bottom = 15.0
+offset_left = 14.0
+offset_top = 1.0
+offset_right = 81.0
+offset_bottom = 16.0
 theme_override_fonts/normal_font = ExtResource("2_xg6lw")
 bbcode_enabled = true
-text = "[font_size=10][color=2c2137] 10/10"
+text = "[font_size=8][color=2c2137] 10"
 
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer"]
 position = Vector2(7, 7)
 texture = ExtResource("3_8mkc0")
 
 [node name="gold" type="RichTextLabel" parent="CanvasLayer"]
-offset_left = 119.0
-offset_right = 160.0
-offset_bottom = 15.0
+offset_left = 139.0
+offset_top = 1.0
+offset_right = 180.0
+offset_bottom = 16.0
 theme_override_fonts/normal_font = ExtResource("2_xg6lw")
 bbcode_enabled = true
-text = "[font_size=10][color=2c2137] 100"
+text = "[font_size=8][color=2c2137] 10"
+
+[node name="block" type="RichTextLabel" parent="CanvasLayer"]
+visible = false
+offset_left = 81.0
+offset_top = 1.0
+offset_right = 148.0
+offset_bottom = 16.0
+theme_override_fonts/normal_font = ExtResource("2_xg6lw")
+bbcode_enabled = true
+text = "[font_size=8][color=2c2137] 0"
+
+[node name="shield" type="Sprite2D" parent="CanvasLayer"]
+visible = false
+position = Vector2(76, 7)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("4_3eau8")
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(132, 6)
+texture = ExtResource("5_hkhdc")
 
 [node name="TransitionLayer" type="CanvasLayer" parent="."]
 
@@ -47,3 +72,32 @@ offset_right = 160.0
 offset_bottom = 145.0
 mouse_filter = 2
 color = Color(0.172549, 0.129412, 0.215686, 0)
+
+[node name="textBox" type="CanvasLayer" parent="."]
+
+[node name="ColorRect2" type="ColorRect" parent="textBox"]
+offset_left = 13.0
+offset_top = 20.0
+offset_right = 152.0
+offset_bottom = 62.0
+color = Color(0.662745, 0.407843, 0.407843, 1)
+
+[node name="ColorRect" type="ColorRect" parent="textBox"]
+offset_left = 16.0
+offset_top = 22.0
+offset_right = 149.0
+offset_bottom = 59.0
+color = Color(0.929412, 0.705882, 0.631373, 1)
+
+[node name="textBoxText" type="RichTextLabel" parent="textBox"]
+clip_contents = false
+offset_left = 20.0
+offset_top = 24.0
+offset_right = 109.0
+offset_bottom = 54.0
+theme_override_fonts/normal_font = ExtResource("2_xg6lw")
+bbcode_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="textBox"]
+position = Vector2(128, 40)
+texture = ExtResource("4_5d1sj")
