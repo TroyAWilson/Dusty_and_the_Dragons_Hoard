@@ -6,7 +6,7 @@
 
 Play as the titular Dusty as you combine mysterious magical runes in search of the Dragon's **old gold.**
 
-Made for the [GBJam 14](https://itch.io/jam/gbjam-14) with the theme **Old Gold**.
+Made for the [GBJam 14](https://itch.io/jam/gbjam-14) with the theme **Old Gold**. See the itch.io page [here](https://treeii.itch.io/dusty-and-the-dragons-hoard)
 
 <p align="center">
   <a href="https://itch.io/jam/gbjam-14">
